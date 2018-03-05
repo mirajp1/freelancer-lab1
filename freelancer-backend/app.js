@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 var passport= require('passport');
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var auth = require('./routes/auth');
+var api = require('./routes/api');
+var hookJWTStrategy = require('./config/passport');
 var app = express();
 
 // view engine setup
@@ -23,8 +25,14 @@ app.use(passport.initialize());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Hook the passport JWT strategy.
+hookJWTStrategy(passport);
+
 app.use('/', index);
-app.use('/users', users);
+// app.use('/users', users);
+app.use('/auth',auth)
+
+app.use('/api',passport.authenticate('jwt',{session:false}),api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,6 @@
 const express = require('express');
 const validator = require('validator');
-
+const usersController = require('../controllers').users;
 const router = new express.Router();
 
 function validateSignUp(data){
@@ -55,30 +55,35 @@ function validateLoginForm(data) {
     };
 }
 
-router.post('/signup', (req, res) => {
-    let validation = validateSignupForm(req.body);
-    if (!validation.success) {
-        return res.status(400).json({
-            success: false,
-            errors: validationResult.errors
-        });
-    }
+router.post('/signup',usersController.create);
 
-    return res.status(200).end();
-});
+// router.post('/signup', (req, res) => {
+//     let validation = validateSignupForm(req.body);
+//     if (!validation.success) {
+//         return res.status(400).json({
+//             success: false,
+//             errors: validationResult.errors
+//         });
+//     }
+//     else{
+//
+//     }
+// });
 
-router.post('/login', (req, res) => {
-    const validation = validateLoginForm(req.body);
-    if (!validation.success) {
+router.post('/login',usersController.validateUser);
 
-        return res.status(400).json({
-            success: false,
-            errors: validation.errors
-        });
-    }
-
-    return res.status(200).end();
-});
+// router.post('/login', (req, res) => {
+//     const validation = validateLoginForm(req.body);
+//     if (!validation.success) {
+//
+//         return res.status(400).json({
+//             success: false,
+//             errors: validation.errors
+//         });
+//     }
+//
+//     return res.status(200).end();
+// });
 
 
 module.exports = router;
