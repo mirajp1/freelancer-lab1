@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var profilesController = require('../controllers/profiles');
 
-router.get('/', function(req, res, next) {
-    res.send("dsad");
-});
+router.get('/:id', profilesController.retrieve);
 
 module.exports = router;

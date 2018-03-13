@@ -17,6 +17,8 @@ module.exports = {
     },
     validateUser(req,res){
 
+        // console.log(req.body);
+
         User.findOne({where: { email: req.body.email } })
             .then((user)=>{
                 // console.log(user);
@@ -30,7 +32,7 @@ module.exports = {
                                 { expiresIn: '1d' }
                             );
 
-                            res.json({ success: true, token: 'JWT ' + token });
+                            res.json({ success: true, token: 'JWT ' + token ,user:user});
                         }
                         else{
                             res.status(404).send({error:"Password Incorrect!"});
@@ -41,7 +43,7 @@ module.exports = {
                         res.status(400).send(error)
                     });
             })
-            .catch(error=> res.status(400).send(error));
+            .catch(error=> res.status(400).send({"error":"user not found"}));
 
 
     }

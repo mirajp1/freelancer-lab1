@@ -1,48 +1,30 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    var User = sequelize.define('Profile', {
-        email: {
+    var Profile = sequelize.define('Profile', {
+        phone: {
             type:DataTypes.STRING,
-            unique:true,
-            allowNull:false,
             validate:{
-                isEmail:true
+                isMobilePhone:true
             }
         },
-        password: {
+        image: {
             type:DataTypes.STRING,
-            allowNull:false,
+            defaultValue:"profile.png"
         },
-        userType:{
-            type:DataTypes.ENUM,
-            allowNull:false,
-            values:['work','hire']
+        about:{
+            type:DataTypes.STRING,
         }
+
     }, {
 
     });
-    User.associate = function(models) {
-        // associations can be defined here
+    Profile.associate = function(models) {
+       Profile.belongsTo(models.User,{as:'puser'});
     };
 
-    User.beforeCreate((user, options) => {
-        console.log(user+": hash");
-        return bcrypt.hash(user.password, 10)
-            .then(hash => {
-                user.password = hash;
-            })
-            .catch(err => {
-                throw new Error();
-            });
-    });
 
 
-    User.prototype.validPassword = function(password){
-        console.log("password cheking:"+password);
-        return bcrypt.compare(password, this.password);
-    }
-
-    return User;
+    return Profile;
 };
 
