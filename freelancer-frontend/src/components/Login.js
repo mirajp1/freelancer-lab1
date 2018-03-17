@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
 import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Grid, Row} from "react-bootstrap";
-import * as AuthApi from '../api/auth';
+
+import { connect } from 'react-redux';
+import { loginUser } from '../actions/actions';
 
 class Login extends Component {
 
+    constructor(){
+        super();
+        this.showError = this.showError.bind(this);
+    }
 
     handleSubmit(e){
         e.preventDefault();
@@ -12,19 +18,27 @@ class Login extends Component {
             password:this.passwordInput.value
         };
 
-        console.log("sending:"+payload);
 
-        AuthApi.login(payload)
-            .then((res)=>{
-                console.log(res);
-                if(res.success === true){
-                    localStorage.setItem('jwtToken', res.token);
-                    localStorage.setItem('userId', res.user.id);
-                    this.props.history.push('/profile');
-                }
-            });
+        this.props.loginUser(payload);
+
+        // AuthApi.login(payload)
+        //     .then((res)=>{
+        //         console.log(res);
+        //         if(res.success === true){
+        //             localStorage.setItem('jwtToken', res.token);
+        //             localStorage.setItem('userId', res.user.id);
+        //             this.props.history.push('/profile');
+        //         }
+        //     });
     }
 
+
+    showError(){
+        console.log(this.props.error);
+        if(this.props.error && this.props.error.length>0){
+            return this.props.error;
+        }
+    }
     render() {
         return (
 
@@ -47,6 +61,7 @@ class Login extends Component {
                                     inputRef={(ref)=>this.passwordInput=ref}
                                 />
                             </FormGroup>
+                            {this.showError()}
                             <Button
                                 block
                                 bsSize="large"
@@ -67,4 +82,14 @@ class Login extends Component {
 
 }
 
-export default Login;
+function mapStateToProps(state) {
+    // console.log(state.auth.error);
+
+    return {
+        user: state.auth.user,
+        error:state.auth.error,
+    };
+}
+
+export default connect(mapStateToProps, { loginUser })(Login);
+

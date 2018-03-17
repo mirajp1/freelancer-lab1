@@ -3,6 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var passport= require('passport');
 var index = require('./routes/index');
@@ -32,7 +33,7 @@ app.use('/', index);
 // app.use('/users', users);
 app.use('/auth',auth)
 
-app.use('/api',passport.authenticate('jwt',{session:false}),api);
+app.use('/api',passport.authenticate('jwt',{session:false }),api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

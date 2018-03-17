@@ -3,12 +3,13 @@ const headers = {
 };
 
 export const login = (payload) =>{
-
+    console.log(payload);
     return fetch("/auth/login", {
         method: 'POST',
         headers: {
             ...headers,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'credentials':'true'
         },
         body: JSON.stringify(payload)
     }).then(res => {
@@ -16,7 +17,7 @@ export const login = (payload) =>{
         return res.json();
     })
         .catch(error => {
-            console.log("This is error");
+            console.log(error);
             return error;
         });
 }
@@ -27,7 +28,8 @@ export const signup = (payload) =>{
         method: 'POST',
         headers: {
             ...headers,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'credentials':'true'
         },
         body: JSON.stringify(payload)
     }).then(res => {
@@ -35,7 +37,7 @@ export const signup = (payload) =>{
         return res.json();
     })
         .catch(error => {
-            console.log("This is error");
+            console.log(error);
             return error;
         });
 }
@@ -47,14 +49,56 @@ export const getProfile = (token,params) =>{
         headers: {
             ...headers,
             'Authorization': token,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'credentials':'true'
         },
     }).then(res => {
         console.log(res);
         return res.json();
     })
         .catch(error => {
-            console.log("This is error");
+            console.log(error);
+            return error;
+        });
+}
+
+export const addProject = (token,project) =>{
+
+    return fetch("/api/projects/", {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'credentials':'true'
+        },
+        body: JSON.stringify(project)
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
+}
+
+export const getProject = (token,params) =>{
+
+    return fetch("/api/projects/"+params, {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'credentials':'true'
+        },
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
             return error;
         });
 }

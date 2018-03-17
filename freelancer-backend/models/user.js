@@ -22,8 +22,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
 
   });
+
   User.associate = function(models) {
     User.hasOne(models.Profile);
+    User.hasMany(models.Project);
+    User.hasMany(models.Bid);
+    User.belongsToMany(models.Skill,{through:"UserSkills"});
   };
 
     User.beforeCreate((user, options) => {

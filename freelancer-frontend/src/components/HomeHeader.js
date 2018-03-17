@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {MenuItem, Nav, Navbar, NavDropdown, NavItem} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
+import {withRouter} from "react-router-dom";
 
 class HomeHeader extends Component {
     render() {
@@ -39,6 +40,9 @@ class HomeHeader extends Component {
                                 Sign Up
                             </NavItem>
                         </LinkContainer>
+                        <NavItem eventKey={1} onClick={this.props.logout.bind(this)}>
+                            Logout
+                        </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -47,4 +51,4 @@ class HomeHeader extends Component {
     }
 }
 
-export default HomeHeader;
+export default withRouter(HomeHeader);

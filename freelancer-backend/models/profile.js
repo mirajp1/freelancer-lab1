@@ -14,15 +14,18 @@ module.exports = (sequelize, DataTypes) => {
         },
         about:{
             type:DataTypes.STRING,
+        },
+        name:{
+            type:DataTypes.STRING
         }
 
     }, {
 
     });
+
     Profile.associate = function(models) {
        Profile.belongsTo(models.User,{as:'puser'});
     };
-
 
 
     return Profile;
