@@ -124,6 +124,93 @@ export function fetchProject(token, params) {
 
 }
 
+export function fetchAllOpenProjects(token) {
+
+    console.log("fetch all open project:");
+    return function(dispatch) {
+        API.getAllOpenProjects(token)
+            .then(res => {
+                console.log(res);
+
+                if(!res.error){
+                    console.log("no error");
+                    dispatch({
+                        type:"GET_All_OPEN_PROJECTS",
+                        payload:res
+                    });
+                }
+                else{
+                    console.log(res.error);
+                    dispatch({
+                        type:"GET_ALL_OPEN_PROJECTS_ERROR",
+                        payload:res
+                    });
+                }
+
+            })
+
+    }
+
+}
+
+export function fetchFreelancerProjects(token) {
+
+    console.log("fetch all freelancer project:");
+    return function(dispatch) {
+        API.getFreelancerProjects(token)
+            .then(res => {
+                console.log(res);
+
+                if(!res.error){
+                    console.log("no error");
+                    dispatch({
+                        type:"GET_FREELANCER_PROJECTS",
+                        payload:res
+                    });
+                }
+                else{
+                    console.log(res.error);
+                    dispatch({
+                        type:"GET_DASHBOARD_ERROR",
+                        payload:res
+                    });
+                }
+
+            })
+
+    }
+
+}
+
+export function fetchEmployerProjects(token) {
+
+    console.log("fetch all employer projects:");
+    return function(dispatch) {
+        API.getEmployerProjects(token)
+            .then(res => {
+                console.log(res);
+
+                if(!res.error){
+                    console.log("no error");
+                    dispatch({
+                        type:"GET_EMPLOYER_PROJECTS",
+                        payload:res
+                    });
+                }
+                else{
+                    console.log(res.error);
+                    dispatch({
+                        type:"GET_DASHBOARD_ERROR",
+                        payload:res
+                    });
+                }
+
+            })
+
+    }
+
+}
+
 export function addProject(token, project) {
 
     console.log("adding project:"+token+":"+project);

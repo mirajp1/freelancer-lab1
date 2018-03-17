@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import AddProject from "./components/AddProject";
 import Home from "./components/Home";
 import Project from "./components/Project";
+import DashBoard from "./components/DashBoard";
 
 class App extends Component {
 
@@ -80,6 +81,18 @@ class App extends Component {
                       return null;
                   }
                   return <Project/>
+
+              }
+              }
+              />
+
+              <Route path={"/dashboard"} render={() => {
+
+                  if (!this.isLoggedIn()) {
+                      this.redirectToLogin();
+                      return null;
+                  }
+                  return <DashBoard/>
 
               }
               }

@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
 import * as AuthApi from '../api/auth';
 import {connect} from "react-redux";
-import {fetchProfile} from "../actions/actions";
+import {fetchAllOpenProjects, fetchProfile, fetchProject} from "../actions/actions";
 import img_default from '../images/default.png';
 import '../css/Home.css';
 import ProjectList from "./ProjectList";
 import BidderList from "./BidderList";
+import {withRouter} from "react-router-dom";
 
 class Home extends Component {
 
+    componentDidMount(){
+        console.log(this.props.match);
 
+        this.props.fetchAllOpenProjects(localStorage.getItem("jwtToken"));
+    }
 
     render() {
         return (
@@ -26,7 +31,7 @@ class Home extends Component {
 
 
 
-                <ProjectList projects={[{bids:"2",started:"Today",days:"5d",budget:"5-12/hr",name:"hello",skills:["PHP","PYTHON","JAVA"],description:"kfsjdf dlkfj lkdsjf kdsljfk sljfkd ljsfkdjf ls"},{name:"hello",skills:["PHP","PYTHON","JAVA"],description:"kfsjdf dlkfj lkdsjf kdsljfk sljfkd ljsfkdjf ls"}]}/>
+                <ProjectList projects={this.props.projects ? this.props.projects : []}/>
 
 
             </div>
@@ -37,5 +42,11 @@ class Home extends Component {
 }
 
 
-export default Home;
+function mapStateToProps(state){
+    return {
+        projects:state.allOpenProjects.projects,
+        error:state.allOpenProjects.error
+    }
+}
 
+export default withRouter(connect(mapStateToProps,{fetchAllOpenProjects})(Home));

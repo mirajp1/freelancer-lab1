@@ -102,3 +102,63 @@ export const getProject = (token,params) =>{
             return error;
         });
 }
+
+export const getAllOpenProjects = (token) =>{
+
+    return fetch("/api/projects/all/open", {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'credentials':'true'
+        },
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
+}
+
+export const getFreelancerProjects = (token) =>{
+
+    return fetch("/api/projects/all/bidded", {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'credentials':'true'
+        },
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
+}
+
+export const getEmployerProjects = (token) =>{
+
+    return fetch("/api/projects/all/created", {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'credentials':'true'
+        },
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
+}
