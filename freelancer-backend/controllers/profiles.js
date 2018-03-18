@@ -1,5 +1,6 @@
 const Profile = require('../models').Profile;
 const User = require('../models').User;
+const Skill = require('../models').Skill;
 
 module.exports = {
     retrieve(req, res) {
@@ -10,7 +11,8 @@ module.exports = {
                 where:{userId:req.params.id},
                 include:[{
                     model:User,
-                    as:'puser'
+                    as:'puser',
+                    include:[Skill]
                 }]
             } )
             .then(profile => {
@@ -22,39 +24,47 @@ module.exports = {
                 res.status(400).send(error)
             });
     },
-    uploadProfilePhoto(req,res){
+    update(req,res){
         console.log(req.body);
 
         console.log(req.file);
 
-        if(req.file){
-            return Profile
-                .findOne({
-                    where:{userId:req.user.id},
-                    include:[{
-                        model:User,
-                        as:'puser'
-                    }]
-                } )
-                .then(profile => {
-                    console.log(profile);
+        var filePath="";
+        if(req.file) {
+            var filePath="/uploads/profile/"+req.file.filename;
+        }
+        return Profile
+            .findOne({
+                where:{userId:req.user.id},
+                include:[{
+                    model:User,
+                    as:'puser'
+                }]
+            } )
+            .then(profile => {
+                console.log(profile);
 
-                    if(profile){
-                        profile.update({image:"/uploads/profile/"+req.file.filename})
-                            .then((profile)=>{
-                                res.status(201).send(profile)
-                            })
-                    }
-                    else {
-                        res.status(400).send({error:"profile not found!"});
+                if(profile){
+                    profile.update({
+                        image:filePath==="" ? profile.image : filePath,
+                        name:req.body.name,
+                        about:req.body.about,
+                        email:req.body.email
+                    })
+                        .then((profile)=>{
+                            res.status(201).send(profile)
+                        })
+                }
+                else {
+                    res.status(400).send({error:"profile not found!"});
 
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    res.status(400).send(error)
-                });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(400).send(error)
+            });
         }
 
     }
-};
+

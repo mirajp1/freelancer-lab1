@@ -4,6 +4,6 @@ var profilesController = require('../controllers/profiles');
 var profileUpload=require('../config/multerConfig').profileMulter;
 
 router.get('/:id', profilesController.retrieve);
-router.post('/image', profileUpload.single('image'),profilesController.uploadProfilePhoto);
+router.put('/', profileUpload.single('image'),profilesController.update);
 
 module.exports = router;

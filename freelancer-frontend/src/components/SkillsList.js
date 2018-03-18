@@ -23,7 +23,7 @@ class SkillsList extends Component {
                         <ul className="list">
 
                             {this.props.skills.map(function(skill,index){
-                                return <li key={index}className="item">{skill}</li>;
+                                return <li key={index}className="item">{skill.name}</li>;
                             })}
 
                         </ul>

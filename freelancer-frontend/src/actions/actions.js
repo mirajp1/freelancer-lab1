@@ -95,24 +95,24 @@ export function fetchProfile(token, params) {
 
 }
 
-export function uploadProfilePhoto(token, data) {
+export function updateProfile(token, data) {
 
-    console.log("upload profile photo"+data);
+    console.log("update profile"+data);
     return function(dispatch) {
-        API.uploadProfilePhoto(token,data)
+        API.updateProfile(token,data)
             .then(res => {
                 console.log(res);
 
                 if(!res.error) {
                     dispatch({
-                        type: "UPLOAD_PROFILE_PHOTO",
+                        type: "UPDATE_PROFILE",
                         payload: res
                     });
                 }
                 else{
                     console.log(res.error);
                     dispatch({
-                        type: "UPLOAD_PROFILE_PHOTO_ERROR",
+                        type: "UPDATE_PROFILE_ERROR",
                         payload: res
                     });
                 }

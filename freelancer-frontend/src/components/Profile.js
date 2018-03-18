@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as AuthApi from '../api/auth';
 import {connect} from "react-redux";
-import {fetchProfile, uploadProfilePhoto} from "../actions/actions";
+import {fetchProfile, updateProfile} from "../actions/actions";
 import img_default from '../images/default.png';
 import '../css/Profile.css';
 import SkillsList from "./SkillsList";
@@ -12,10 +12,18 @@ class Profile extends Component {
         super();
         this.renderEmail = this.renderEmail.bind(this);
         this.state={
-            profileImage:""
+            profileImage:"",
+            editMode:false,
+            email:"",
+            name:"",
+            about:"",
+
         }
         this.onHandleInputChange = this.onHandleInputChange.bind(this);
-        this.uploadImage = this.uploadImage.bind(this);
+        // this.uploadImage = this.uploadImage.bind(this);
+        this.handleEditButton = this.handleEditButton.bind(this);
+        this.handleUpdateButton = this.handleUpdateButton.bind(this);
+        this.handleCancelButton = this.handleCancelButton.bind(this);
     }
 
     componentDidMount(){
@@ -34,27 +42,74 @@ class Profile extends Component {
         }
     }
 
-    uploadImage(e){
-        e.preventDefault();
-
-        let formData = new FormData();
-
-        formData.append('image', this.state.profileImage);
-        this.props.uploadProfilePhoto(localStorage.getItem("jwtToken"),formData);
-
-
-    }
+    // uploadImage(e){
+    //     e.preventDefault();
+    //
+    //     let formData = new FormData();
+    //
+    //     formData.append('image', this.state.profileImage);
+    //     formData.append('email', this.state.email);
+    //     formData.append('about', this.state.about);
+    //     formData.append('name', this.state.name);
+    //
+    //
+    //     this.props.updateProfile(localStorage.getItem("jwtToken"),formData);
+    //
+    //
+    // }
 
     onHandleInputChange(e){
         e.preventDefault();
 
         if(e.target.name==="profileImage") {
             this.setState({[e.target.name]: e.target.files[0]});
-            // console.log(e.target.files[0].name);
+        }
+        else{
+            this.setState({[e.target.name]:e.target.value});
         }
     }
 
+    handleEditButton(e){
+        e.preventDefault();
+
+        this.setState({
+            editMode:true,
+            email:this.props.user ? this.props.user.email:"",
+            about:this.props.profile ? this.props.profile.about:"",
+            name:this.props.profile ? this.props.profile.name:"",
+
+
+        });
+    }
+
+    handleUpdateButton(e){
+        e.preventDefault();
+        this.setState({editMode:false});
+        console.log(this.state);
+
+        let formData = new FormData();
+
+        formData.append('image', this.state.profileImage);
+        formData.append('email', this.state.email);
+        formData.append('about', this.state.about);
+        formData.append('name', this.state.name);
+
+
+        this.props.updateProfile(localStorage.getItem("jwtToken"),formData);
+    }
+
+    handleCancelButton(e){
+        e.preventDefault();
+
+        this.setState({editMode:false});
+    }
+
+
+
     render() {
+        if(this.props.user) {
+            var {Skills} = this.props.user;
+        }
         return (
 
             <div className="container">
@@ -68,10 +123,9 @@ class Profile extends Component {
 
                             <div className="col-md-12">
                                 <img className="img-responsive  " src={this.props.profile? this.props.profile.image:""}/>
-                                <span>
-                                    <input type="file" name="profileImage" onChange={this.onHandleInputChange} accept="image/x-png,image/gif,image/jpeg" />
-                                    <a className="btn btn-primary" onClick={this.uploadImage}>Upload</a>
-                                </span>
+                                {this.state.editMode && <span>
+                                    <br/><input type="file" name="profileImage" onChange={this.onHandleInputChange} accept="image/x-png,image/gif,image/jpeg" /><br/>
+                                </span>}
 
                             </div>
 
@@ -80,7 +134,13 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                <h5>{this.props.user ? this.props.user.email : null}</h5>
+                                {!this.state.editMode && <h5>{this.props.user ? this.props.user.email : null}</h5>}
+                                {this.state.editMode && <div className="row">
+                                    <div className="form-group">
+                                        <input type="email" className="form-control input-lg"  onChange={this.onHandleInputChange} value={this.state.email} name="email" placeholder="Email"/>
+                                    </div>
+                                </div>}
+
                             </div>
 
                         </div>
@@ -92,7 +152,12 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                <h3>{this.props.profile ? this.props.profile.name : null}</h3>
+                                {!this.state.editMode && <h3>{this.props.profile ? this.props.profile.name : null}</h3>}
+                                {this.state.editMode && <div className="row">
+                                    <div className="form-group">
+                                        <input type="text" className="form-control input-lg"  onChange={this.onHandleInputChange} value={this.state.name} name="name" placeholder="Name"/>
+                                    </div>
+                                </div>}
                             </div>
 
                         </div>
@@ -100,7 +165,12 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                <div>{this.props.profile ? this.props.profile.about : null}</div>
+                                {!this.state.editMode && <div>{this.props.profile ? this.props.profile.about : ""}</div>}
+                                {this.state.editMode && <div className="row">
+                                    <div className="form-group">
+                                        <textarea rows="5" className="form-control input-lg"  onChange={this.onHandleInputChange} value={this.state.about} name="about" placeholder="Description"/>
+                                    </div>
+                                </div>}
                             </div>
 
                         </div>
@@ -112,9 +182,20 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                <button className="btn btn-primary btn-lg btn-block">
-                                    <span className="glyphicon glyphicon-edit" aria-hidden="true"/>  Edit Profile
+
+
+                                {!this.state.editMode && <button onClick={this.handleEditButton} className="btn btn-primary btn-lg btn-block">
+                                    <span className="glyphicon glyphicon-edit" aria-hidden="true"/> Edit Profile
+                                </button>}
+
+                                {this.state.editMode &&
+                                <button onClick={this.handleCancelButton} className="btn btn-primary btn-lg btn-block">
+                                    <span className="glyphicon glyphicon-remove" aria-hidden="true"/> Cancel
+                                </button>}
+                                {this.state.editMode && <button onClick={this.handleUpdateButton} className="btn btn-primary btn-lg btn-block">
+                                    <span className="glyphicon glyphicon-edit" aria-hidden="true"/> Update
                                 </button>
+                                }
                             </div>
 
                         </div>
@@ -122,7 +203,12 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                <h2 className="rate-amount">$40</h2>  USD/hr
+                                {!this.state.editMode && <h2 className="rate-amount">$40 USD/hr</h2>}
+                                {this.state.editMode && <div className="row">
+                                    <div className="form-group">
+                                        <input type="text" className="form-control input-lg"  value="40" name="rate" placeholder="rate"/>
+                                    </div>
+                                </div>}
                             </div>
 
                         </div>
@@ -142,7 +228,7 @@ class Profile extends Component {
 
                     <div className="profile-skill-column col-md-3 col-md-offset-9">
 
-                        <SkillsList skills={[1,2,3]}/>
+                        <SkillsList skills={this.props.user ? Skills :[]}/>
 
                     </div>
 
@@ -171,5 +257,5 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { fetchProfile,uploadProfilePhoto })(Profile);
+export default connect(mapStateToProps, { fetchProfile,updateProfile })(Profile);
 

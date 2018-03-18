@@ -103,10 +103,10 @@ export const addProject = (token,project) =>{
         });
 }
 
-export const uploadProfilePhoto = (token,profile) =>{
+export const updateProfile = (token,profile) =>{
 
-    return fetch("/api/profile/image", {
-        method: 'POST',
+    return fetch("/api/profile/", {
+        method: 'PUT',
         headers: {
             ...headers,
             'Authorization': token,
