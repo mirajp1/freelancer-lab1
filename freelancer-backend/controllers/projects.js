@@ -62,6 +62,47 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
+    bid(req, res) {
+        console.log(req.params.id);
+        console.log(req.body);
+
+        return Bid
+            .findOne({
+                where:{userId:req.user.id,projectId:req.params.id}
+            })
+            .then(bid => {
+                if(bid){
+                    res.status(400).send({error:"Can't bid again on same project"});
+                }
+                else{
+                    Bid.create({
+                        UserId:req.user.id,
+                        ProjectId:req.params.id,
+                        bid_amount:req.body.bid_amount,
+                        days:req.body.days
+                    })
+                        .then(bid=>{
+
+                            Bid.findOne({
+                                where:{id:bid.id},
+                                include:[{
+                                model:User,
+                                    include:[Profile]
+                                }]})
+                                .then((bid)=>{
+                                    console.log(bid);
+                                    res.status(200).send(bid);
+                                })
+                                .catch(error => res.status(400).send(error));
+
+                        })
+                        .catch(error => res.status(400).send(error));
+
+                }
+
+            })
+            .catch(error => res.status(400).send(error));
+    },
     retrieveAll(req, res) {
         console.log(req.params);
         console.log(req.user.id);

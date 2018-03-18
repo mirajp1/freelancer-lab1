@@ -2,50 +2,39 @@ import React, {Component} from 'react';
 import {MenuItem, Nav, Navbar, NavDropdown, NavItem} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
 import {withRouter} from "react-router-dom";
-
+import logo from '../images/logo.png'
 class HomeHeader extends Component {
     render() {
         return (
-            <Navbar inverse collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#brand">React-Bootstrap</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav>
-                        <NavItem eventKey={1} href="#">
-                            Link
-                        </NavItem>
-                        <NavItem eventKey={2} href="#">
-                            Link
-                        </NavItem>
-                        <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.1}>Action</MenuItem>
-                            <MenuItem eventKey={3.2}>Another action</MenuItem>
-                            <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                            <MenuItem divider />
-                            <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                        </NavDropdown>
-                    </Nav>
-                    <Nav pullRight>
-                        <LinkContainer to="/login">
-                            <NavItem eventKey={1} >
-                                Login
-                            </NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/signup">
-                            <NavItem eventKey={2} >
-                                Sign Up
-                            </NavItem>
-                        </LinkContainer>
-                        <NavItem eventKey={1} onClick={this.props.logout.bind(this)}>
-                            Logout
-                        </NavItem>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
+
+            <nav className="navbar navbar-default navbar-background">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <a className="navbar-brand" href="/home">
+                            <img alt="Brand" src={logo}/>
+                        </a>
+                    </div>
+
+                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li ><a href="/signup">Register</a></li>
+
+                        </ul>
+
+                        <ul className="nav navbar-nav navbar-right">
+                            <li><a href="/login">Login</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
 
         );
     }

@@ -143,6 +143,29 @@ export const getProject = (token,params) =>{
         });
 }
 
+
+export const placeBid = (token,data,params) =>{
+
+    return fetch("/api/projects/"+params+"/bid", {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'credentials':'true'
+        },
+        body:JSON.stringify(data)
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
+}
+
+
 export const getAllOpenProjects = (token) =>{
 
     return fetch("/api/projects/all/open", {

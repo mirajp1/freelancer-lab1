@@ -8,6 +8,10 @@ export default function (state = INITIAL_STATE, action) {
             return { ...state, project:action.payload };
         case "GET_PROJECT_ERROR":
             return {...state,project:{},error:action.payload.error};
+        case "PLACE_BID":
+            return { ...state, project:{...state.project,Bids:[...state.project.Bids,action.payload]} };
+        case "PLACE_BID_ERROR":
+            return {...state,error:action.payload.error};
 
     }
 

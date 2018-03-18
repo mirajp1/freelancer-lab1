@@ -1,17 +1,50 @@
 import React, {Component} from 'react';
 import '../css/Project.css'
 import BidderList from "./BidderList";
-import {fetchProject} from "../actions/actions";
+import {fetchProject, placeBid} from "../actions/actions";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import Bid from "./Bid";
 
 class Project extends Component{
 
 
+    constructor(){
+        super();
+        this.state={
+            showBidBlock:false
+        }
+    }
+
     componentDidMount(){
         console.log(this.props.match);
 
+
+
         this.props.fetchProject(localStorage.getItem("jwtToken"),this.props.match.params.projectId);
+    }
+
+    placeBid(days,value){
+        var data ={
+            days:days,
+            bid_amount:value
+        }
+
+
+        console.log(data);
+        this.props.placeBid(localStorage.getItem("jwtToken"),data,this.props.match.params.projectId)
+        this.setState({showBidBlock:false});
+
+
+    }
+
+    cancelBid(){
+        this.setState({showBidBlock:false});
+    }
+
+    bidNowButton(e){
+        e.preventDefault();
+        this.setState({showBidBlock:true});
     }
 
     render(){
@@ -79,13 +112,17 @@ class Project extends Component{
                     <div className="col-md-12 project-data">
 
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-6">
                                 <div className="body-header">Project Description</div>
                             </div>
+                            <div className="col-md-6 ">
+                                <a  onClick={this.bidNowButton.bind(this)} className="pull-right btn btn-primary btn-lg">Bid On this Project</a>
+                            </div>
+
                         </div>
 
                         <div className="row">
-                            <div className="col-md-7">
+                            <div className="col-md-12">
                                 <p className="body-text">{this.props.project ? this.props.project.description:"loading"}</p>
                                 <br/>
                             </div>
@@ -108,6 +145,10 @@ class Project extends Component{
                 </div>
                 <br/>
                 <br/>
+
+                {this.state.showBidBlock && <Bid placeBid={this.placeBid.bind(this)} cancelBid={this.cancelBid.bind(this)}/>}
+
+
                 <BidderList bids={Bids}/>
 
 
@@ -123,4 +164,4 @@ function mapStateToProps(state){
     }
 }
 
-export default withRouter(connect(mapStateToProps,{fetchProject})(Project));
+export default withRouter(connect(mapStateToProps,{fetchProject,placeBid})(Project));

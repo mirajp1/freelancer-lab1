@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import HomeHeader from './components/HomeHeader';
+import Header from './components/Header';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
@@ -22,7 +23,8 @@ class App extends Component {
   render() {
     return (
       <div>
-          <HomeHeader logout={this.logout}/>
+          {this.isLoggedIn() && <Header logout={this.logout}/>}
+          {!this.isLoggedIn() && <HomeHeader/>}
           <div className="main">
 
               <Route path="/login" render={() => {

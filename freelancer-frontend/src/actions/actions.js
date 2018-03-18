@@ -152,6 +152,35 @@ export function fetchProject(token, params) {
 
 }
 
+export function placeBid(token, data,params) {
+
+    console.log("put bid:"+params);
+    return function(dispatch) {
+        API.placeBid(token,data,params)
+            .then(res => {
+                console.log(res);
+
+                if(!res.error){
+                    console.log("no error");
+                    dispatch({
+                        type:"PLACE_BID",
+                        payload:res
+                    });
+                }
+                else{
+                    console.log(res.error);
+                    dispatch({
+                        type:"PLACE_BID_ERROR",
+                        payload:res
+                    });
+                }
+
+            })
+
+    }
+
+}
+
 export function fetchAllOpenProjects(token) {
 
     console.log("fetch all open project:");
