@@ -84,7 +84,7 @@ class ProjectItem extends Component {
                     <div className="row">
 
                         <br/>
-                        <a className="btn btn-success pull-right">Bid Now</a>
+                        <a className="btn btn-success pull-right" a href={"/projects/"+this.props.details.id} >Bid Now</a>
 
 
                     </div>

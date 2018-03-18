@@ -29,6 +29,8 @@ class HomeHeader extends Component {
                         </ul>
 
                         <ul className="nav navbar-nav navbar-right">
+                            <li><div  className="navbar-btn"><a className="btn btn-warning header-button" a href="/add-project" >Post a Project</a></div></li>
+
                             <li><a href="#" onClick={this.props.logout.bind(this)}>Logout</a></li>
 
                         </ul>

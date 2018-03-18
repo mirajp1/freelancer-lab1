@@ -20,6 +20,17 @@ class Signup extends Component {
             });
     }
 
+    showError(){
+        console.log(this.props.error);
+        if(this.props.error && this.props.error.length>0){
+            return (
+                <div class="alert alert-danger" role="alert">{this.props.error}</div>
+
+
+            );
+        }
+    }
+
     render() {
         return (
 
@@ -50,6 +61,7 @@ class Signup extends Component {
                                     Hire
                                 </Radio>{' '}
                             </FormGroup>
+                            {this.showError()}
                             <Button
                                 block
                                 bsSize="large"

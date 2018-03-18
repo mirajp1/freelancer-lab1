@@ -13,3 +13,7 @@ body {
 .navbar-background{
   background-color: white !important;
 }
+
+.header-button{
+  font-weight: bold;
+}
