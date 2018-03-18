@@ -1,0 +1,55 @@
+const chai = require('chai');
+const expect = require('chai').expect;
+
+chai.use(require('chai-http'));
+
+const app = require('../app.js'); // Our app
+
+describe('API endpoint /auth/signup', function() {
+    this.timeout(5000); // How long to wait for a response (ms)
+
+    before(function() {
+
+    });
+
+    after(function() {
+
+    });
+
+    it('should return user created', function() {
+        return chai.request(app)
+            .post('/auth/signup')
+            .send({
+                email:"test11154y@gmail.com",
+                password:"test",
+                userType:"work"
+            })
+            .then(function(res) {
+                expect(res).to.have.status(201);
+                expect(res).to.be.json;
+                expect(res.body).to.be.an('object');
+                expect(res.body.email).to.equal('test11154y@gmail.com');
+            });
+    });
+
+    it('should return error that email should be unique', function() {
+        return chai.request(app)
+            .post('/auth/signup')
+            .send({
+                email:"test@gmail.com",
+                password:"te1t",
+                userType:"work"
+            })
+            .then(function(res) {
+                expect(res).to.have.status(400);
+                expect(res).to.be.json;
+                expect(res.body).to.be.an('object');
+                expect(res.body.error).to.be.an('string');
+            })
+            .catch(function(err) {
+                    expect(err).to.have.status(400);
+            });
+    });
+
+
+});

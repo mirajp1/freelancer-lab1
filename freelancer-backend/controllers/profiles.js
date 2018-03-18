@@ -16,7 +16,7 @@ module.exports = {
                 }]
             } )
             .then(profile => {
-                console.log(profile);
+                // console.log(profile);
                 res.status(201).send(profile)
             })
             .catch(error => {
@@ -42,7 +42,7 @@ module.exports = {
                 }]
             } )
             .then(profile => {
-                console.log(profile);
+                // console.log(profile);
 
                 if(profile){
                     profile.update({

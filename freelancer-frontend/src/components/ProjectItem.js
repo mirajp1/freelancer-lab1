@@ -38,7 +38,7 @@ class ProjectItem extends Component {
 
                 <div className="col-md-2">
 
-                    <div className="project-bid pull-right">{Profile && Profile.name}</div>
+                    <a className="project-bid pull-right">{Profile && Profile.name}</a>
 
                 </div>
 
@@ -84,7 +84,7 @@ class ProjectItem extends Component {
                     <div className="row">
 
                         <br/>
-                        <a className="btn btn-success pull-right" a href={"/projects/"+this.props.details.id} >Bid Now</a>
+                        <a className="btn btn-success pull-right" href={"/projects/"+this.props.details.id} >Bid Now</a>
 
 
                     </div>

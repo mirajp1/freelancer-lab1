@@ -35,7 +35,7 @@ module.exports = {
                             res.json({ success: true, token: 'JWT ' + token ,user:user});
                         }
                         else{
-                            res.status(404).send({error:"Password Incorrect!"});
+                            res.status(400).send({error:"Password Incorrect!"});
                         }
                     })
                     .catch(error=>{
