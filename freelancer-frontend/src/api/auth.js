@@ -62,6 +62,27 @@ export const getProfile = (token,params) =>{
         });
 }
 
+// export const addProject = (token,project) =>{
+//
+//     return fetch("/api/projects/", {
+//         method: 'POST',
+//         headers: {
+//             ...headers,
+//             'Authorization': token,
+//             'Content-Type': 'application/json',
+//             'credentials':'true'
+//         },
+//         body: JSON.stringify(project)
+//     }).then(res => {
+//         console.log(res);
+//         return res.json();
+//     })
+//         .catch(error => {
+//             console.log(error);
+//             return error;
+//         });
+// }
+
 export const addProject = (token,project) =>{
 
     return fetch("/api/projects/", {
@@ -69,10 +90,29 @@ export const addProject = (token,project) =>{
         headers: {
             ...headers,
             'Authorization': token,
-            'Content-Type': 'application/json',
             'credentials':'true'
         },
-        body: JSON.stringify(project)
+        body: project
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
+}
+
+export const uploadProfilePhoto = (token,profile) =>{
+
+    return fetch("/api/profile/image", {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Authorization': token,
+            'credentials':'true'
+        },
+        body: profile
     }).then(res => {
         console.log(res);
         return res.json();

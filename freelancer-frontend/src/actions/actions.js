@@ -95,6 +95,34 @@ export function fetchProfile(token, params) {
 
 }
 
+export function uploadProfilePhoto(token, data) {
+
+    console.log("upload profile photo"+data);
+    return function(dispatch) {
+        API.uploadProfilePhoto(token,data)
+            .then(res => {
+                console.log(res);
+
+                if(!res.error) {
+                    dispatch({
+                        type: "UPLOAD_PROFILE_PHOTO",
+                        payload: res
+                    });
+                }
+                else{
+                    console.log(res.error);
+                    dispatch({
+                        type: "UPLOAD_PROFILE_PHOTO_ERROR",
+                        payload: res
+                    });
+                }
+
+            })
+
+    }
+
+}
+
 export function fetchProject(token, params) {
 
     console.log("fetch_project:"+params);

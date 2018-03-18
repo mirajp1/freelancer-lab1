@@ -6,7 +6,10 @@ export default function (state = INITIAL_STATE, action) {
     switch(action.type) {
         case "GET_PROFILE":
             return { ...state, profile:action.payload };
-
+        case "UPLOAD_PROFILE_PHOTO":
+            return { ...state,profile:{...state.profile,image:action.payload.image}};
+        case "UPLOAD_PROFILE_PHOTO_ERROR":
+            return { ...state,error:action.payload.error};
 
     }
 

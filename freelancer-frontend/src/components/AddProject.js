@@ -10,9 +10,10 @@ class AddProject extends Component{
         this.state = {
             name:"",
             description:"",
-            skills:[],
+            skills:"",
             budget_range_start:"",
-            budget_range_end:""
+            budget_range_end:"",
+            file:""
         }
 
         this.handleInputChange=this.handleInputChange.bind(this);
@@ -22,11 +23,25 @@ class AddProject extends Component{
 
     handleInputChange(e){
         e.preventDefault();
-        this.setState({[e.target.name]:e.target.value});
+
+        if(e.target.name==="file") {
+            this.setState({[e.target.name]: e.target.files[0]});
+            // console.log(e.target.files[0].name);
+        }
+        else
+            this.setState({[e.target.name]:e.target.value});
     }
 
     handleAddProject(e){
         e.preventDefault();
+
+        let formData = new FormData();
+
+        formData.append('name', this.state.name);
+        formData.append('description', this.state.description);
+        formData.append('budget_range', this.state.budget_range_star+"-"+this.state.budget_range_end);
+        formData.append('file', this.state.file);
+        formData.append('skills', this.state.skills.split(','));
 
         var project ={
             name:this.state.name,
@@ -36,7 +51,7 @@ class AddProject extends Component{
             skills:this.state.skills.split(',')
         }
 
-        this.props.addProject(localStorage.getItem("jwtToken"),project);
+        this.props.addProject(localStorage.getItem("jwtToken"),formData);
 
         console.log(project);
     }
@@ -123,7 +138,8 @@ class AddProject extends Component{
                         <div className="row" >
                             <div className="col-md-offset-2 col-md-8 col-md-offset-2">
                                 <div className="upload-btn-box">
-                                    <button type="button" className="btn upload-btn">+ Upload Files</button>
+                                    <input type="file" name="file" onChange={this.handleInputChange} className="btn upload-btn"/>
+
                                     <span className="file-upload-text">Drag & drop any images or documents that might be helpful in explaining your project brief here.</span>
                                 </div>
                                 <br/>

@@ -50,11 +50,11 @@ class DashBoard extends Component {
                     <div className="col-md-4">
 
                         <div className="btn-group pull-right" data-toggle="buttons">
-                            <label className={this.state.show==="freelancer" ? "btn btn-primary active":"btn btn-primary"}>
+                            <label className={this.state.show==="freelancer" ? "btn btn-primary active btn-lg":"btn btn-primary btn-lg"}>
                                 <input onClick={this.handleToggle} type="radio" name="freelancerToggle"/>
                                 Freelancer
                             </label>
-                            <label className={this.state.show==="employer" ? "btn btn-primary active":"btn btn-primary"} >
+                            <label className={this.state.show==="employer" ? "btn btn-primary active btn-lg":"btn btn-primary btn-lg"} >
                                 <input onClick={this.handleToggle} type="radio" name="employerToggle"/>
                                 Employer
                             </label>

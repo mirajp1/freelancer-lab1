@@ -18,7 +18,7 @@ class ProjectItem extends Component {
 
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="project-name"><a>{this.props.details.name}</a></div>
+                            <div className="project-name"><a href={"/projects/"+this.props.details.id}>{this.props.details.name}</a></div>
                         </div>
                     </div>
 

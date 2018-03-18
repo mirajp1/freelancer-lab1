@@ -35,11 +35,17 @@ module.exports = {
     create(req, res) {
         console.log(req.body);
 
+        console.log(req.file);
+        let filePath=""
+        if(req.file){
+            filePath="/uploads/project/"+req.file.filename;
+        }
         return Project
             .create({
                 name: req.body.name,
                 description:req.body.description,
                 budget_range:req.body.budget_range,
+                file:filePath
 
             })
             .then(project => {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as AuthApi from '../api/auth';
 import {connect} from "react-redux";
-import {fetchProfile} from "../actions/actions";
+import {fetchProfile, uploadProfilePhoto} from "../actions/actions";
 import img_default from '../images/default.png';
 import '../css/Profile.css';
 import SkillsList from "./SkillsList";
@@ -11,6 +11,11 @@ class Profile extends Component {
     constructor(){
         super();
         this.renderEmail = this.renderEmail.bind(this);
+        this.state={
+            profileImage:""
+        }
+        this.onHandleInputChange = this.onHandleInputChange.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
 
     componentDidMount(){
@@ -29,6 +34,26 @@ class Profile extends Component {
         }
     }
 
+    uploadImage(e){
+        e.preventDefault();
+
+        let formData = new FormData();
+
+        formData.append('image', this.state.profileImage);
+        this.props.uploadProfilePhoto(localStorage.getItem("jwtToken"),formData);
+
+
+    }
+
+    onHandleInputChange(e){
+        e.preventDefault();
+
+        if(e.target.name==="profileImage") {
+            this.setState({[e.target.name]: e.target.files[0]});
+            // console.log(e.target.files[0].name);
+        }
+    }
+
     render() {
         return (
 
@@ -42,7 +67,12 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                <img className="img-responsive  " src={img_default}/>
+                                <img className="img-responsive  " src={this.props.profile? this.props.profile.image:""}/>
+                                <span>
+                                    <input type="file" name="profileImage" onChange={this.onHandleInputChange} accept="image/x-png,image/gif,image/jpeg" />
+                                    <a className="btn btn-primary" onClick={this.uploadImage}>Upload</a>
+                                </span>
+
                             </div>
 
                         </div>
@@ -141,5 +171,5 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { fetchProfile })(Profile);
+export default connect(mapStateToProps, { fetchProfile,uploadProfilePhoto })(Profile);
 
