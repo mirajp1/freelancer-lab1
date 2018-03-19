@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Grid, Radio, Row} from "react-bootstrap";
 import * as AuthApi from '../api/auth';
-
+import logo from '../images/logo.png'
 class Signup extends Component {
+
+    constructor(){
+        super();
+        this.state={
+            error:""
+        }
+        this.showError=this.showError.bind(this);
+    }
 
     handleSubmit(e){
         e.preventDefault();
@@ -17,14 +25,20 @@ class Signup extends Component {
         AuthApi.signup(payload)
             .then((res)=>{
                 console.log(res);
+                if(res.error){
+                    this.setState({error:res.error});
+                }
+                else{
+                    this.props.history.push("/login")
+                }
             });
     }
 
     showError(){
         console.log(this.props.error);
-        if(this.props.error && this.props.error.length>0){
+        if(this.state.error && this.state.error.length>0){
             return (
-                <div class="alert alert-danger" role="alert">{this.props.error}</div>
+                <div className="alert alert-danger" role="alert">{this.state.error}</div>
 
 
             );
@@ -34,9 +48,23 @@ class Signup extends Component {
     render() {
         return (
 
-            <Grid>
+            <div className="container ">
+                <div className="row">
+
+                    <div className="card col-xs-offset-0 col-xs-12 col-md-offset-4 col-md-4">
+
+                        <div className="row">
+                            <div className="col-md-12" align="center">
+
+                                <br/>
+                                <img src={logo} className="img-responsive"/>
+                                <br/>
+                                <hr/>
+                                <br/>
+                            </div>
+                        </div>
                 <Row>
-                    <Col xs={12} mdOffset={4} md={4}>
+                    <Col xs={12} md={12}>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormGroup controlId="email" bsSize="large">
                                 <ControlLabel>Email</ControlLabel>
@@ -62,6 +90,7 @@ class Signup extends Component {
                                 </Radio>{' '}
                             </FormGroup>
                             {this.showError()}
+                            <br/>
                             <Button
                                 block
                                 bsSize="large"
@@ -71,10 +100,15 @@ class Signup extends Component {
                             >
                                 Sign Up
                             </Button>
+                            <br/>
+                            <br/>
                         </Form>
                     </Col>
                 </Row>
-            </Grid>
+
+                    </div>
+                </div>
+            </div>
 
 
         );

@@ -7,9 +7,7 @@ class ProjectItem extends Component {
 
     render() {
 
-        const {Skills,Bids,User} = this.props.details;
-        if(User)
-            var {Profile} = User;
+        const {Skills,Bids,User:{Profile}} = this.props.details;
         return (
 
 
@@ -46,7 +44,7 @@ class ProjectItem extends Component {
 
                 <div className="col-md-2">
 
-                    <div className="project-bid pull-right">{Bids.length+""}</div>
+                    <div className="project-bid pull-right">{"$"+Bids.length*100+""}</div>
 
                 </div>
 
@@ -55,7 +53,7 @@ class ProjectItem extends Component {
                     <div className="row ">
 
                         <div className="col-md-12">
-                            <div className="pull-right project-started">{"Today"}</div>
+                            <div className="pull-right project-started">{"$101"}</div>
                         </div>
 
 
@@ -64,7 +62,7 @@ class ProjectItem extends Component {
                     <div className="row ">
 
                         <div className="col-md-12">
-                           <div className="project-days pull-right">{"6d 15h"}</div>
+                           <div className="project-days pull-right">{}</div>
                         </div>
 
 
@@ -77,7 +75,7 @@ class ProjectItem extends Component {
                     <div className="row">
 
                         <div className="col-md-12">
-                            <div className="project-budget pull-right">${this.props.details.budget_range}</div>
+                            <div className="project-budget pull-right">{this.props.key%2 === 0 ? "OPEN" : "DONE"}</div>
                         </div>
 
 
@@ -86,7 +84,7 @@ class ProjectItem extends Component {
                     <div className="row">
 
                         <br/>
-                        <a className="btn btn btn-warning btn-sm pull-right" href={"/projects/"+this.props.details.id} >Bid Now</a>
+                        {/*<a className="btn btn btn-warning btn-sm pull-right" href={"/projects/"+this.props.details.id} >Bid Now</a>*/}
 
 
                     </div>

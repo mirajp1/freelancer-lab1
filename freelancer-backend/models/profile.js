@@ -3,10 +3,7 @@
 module.exports = (sequelize, DataTypes) => {
     var Profile = sequelize.define('Profile', {
         phone: {
-            type:DataTypes.STRING,
-            validate:{
-                isMobilePhone:true
-            }
+            type:DataTypes.STRING
         },
         image: {
             type:DataTypes.STRING,

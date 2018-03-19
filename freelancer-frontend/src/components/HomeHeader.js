@@ -22,7 +22,7 @@ class HomeHeader extends Component {
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
+                        <ul className="nav navbar-nav">
                             <li ><a href="/signup">Register</a></li>
 
                         </ul>

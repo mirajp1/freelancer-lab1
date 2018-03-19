@@ -34,6 +34,19 @@ module.exports = {
     },
     create(req, res) {
         console.log(req.body);
+        if(req.body.name===""){
+            res.status(400).send({error:"Cannot have empty project name"});
+        }
+        else if(req.body.name && req.body.name.length < 12){
+            res.status(400).send({error:"Project name length must be atleast 12!"});
+        }
+        else if(req.body.description===""){
+            res.status(400).send({error:"Cannot have empty project description"});
+        }
+        else if(req.body.budget_range===""){
+            res.status(400).send({error:"Budget Range cannot be  empty!"});
+        }
+
 
         console.log(req.file);
         let filePath=""
@@ -105,7 +118,6 @@ module.exports = {
     },
     retrieveAll(req, res) {
         console.log(req.params);
-        console.log(req.user.id);
 
         return Project
             .findAll({

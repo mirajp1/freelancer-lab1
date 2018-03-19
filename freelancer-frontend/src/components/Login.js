@@ -3,6 +3,9 @@ import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Grid, Row} from
 
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/actions';
+import '../css/Login.css';
+import logo from '../images/logo.png';
+
 
 class Login extends Component {
 
@@ -37,7 +40,7 @@ class Login extends Component {
         console.log(this.props.error);
         if(this.props.error && this.props.error.length>0){
             return (
-                <div class="alert alert-danger" role="alert">{this.props.error}</div>
+                <div className="alert alert-danger" role="alert">{this.props.error}</div>
 
 
             );
@@ -46,9 +49,23 @@ class Login extends Component {
     render() {
         return (
 
-            <Grid>
-                <Row>
-                    <Col xs={12} mdOffset={4} md={4}>
+            <div className="container ">
+            <div className="row">
+
+                <div className="card col-xs-offset-0 col-xs-12 col-md-offset-4 col-md-4">
+
+                    <div className="row">
+                        <div className="col-md-12" align="center">
+
+                            <br/>
+                            <img src={logo} className="img-responsive"/>
+                            <br/>
+                            <hr/>
+                            <br/>
+                        </div>
+                    </div>
+                <Row >
+                    <Col xs={12}  md={12}>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormGroup controlId="email" bsSize="large">
                                 <ControlLabel>Email</ControlLabel>
@@ -66,6 +83,7 @@ class Login extends Component {
                                 />
                             </FormGroup>
                             {this.showError()}
+                            <br/>
                             <Button
                                 block
                                 bsSize="large"
@@ -75,12 +93,15 @@ class Login extends Component {
                             >
                                 Login
                             </Button>
+                        <br/>
+                        <br/>
                         </Form>
                     </Col>
                 </Row>
-            </Grid>
 
-
+                </div>
+            </div>
+            </div>
         );
     }
 

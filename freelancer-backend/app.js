@@ -33,7 +33,7 @@ app.use('/', index);
 // app.use('/users', users);
 app.use('/auth',auth)
 
-app.use('/api',passport.authenticate('jwt',{session:false }),api);
+app.use('/api',api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

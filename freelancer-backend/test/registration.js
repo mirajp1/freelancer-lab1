@@ -20,17 +20,64 @@ describe('API endpoint /auth/signup', function() {
         return chai.request(app)
             .post('/auth/signup')
             .send({
-                email:"test11154y@gmail.com",
-                password:"test",
+                email:"tesfsdfearef@gmail.com",
+                password:"test121212",
                 userType:"work"
             })
             .then(function(res) {
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.an('object');
-                expect(res.body.email).to.equal('test11154y@gmail.com');
+                expect(res.body.email).to.equal('tesfsdfearef@gmail.com');
             });
     });
+
+
+    it('should return error that password empty', function() {
+        return chai.request(app)
+            .post('/auth/signup')
+            .send({
+                email:"tesfsdfearef@gmail.com",
+                password:"",
+                userType:"work"
+            })
+            .then(function(res) {
+            })
+            .catch(function(err) {
+                expect(err).to.have.status(400);
+            });
+    });
+
+    it('should return error that password cannot empty', function() {
+        return chai.request(app)
+            .post('/auth/signup')
+            .send({
+                email:"",
+                password:"sfdsfdsfd",
+                userType:"work"
+            })
+            .then(function(res) {
+            })
+            .catch(function(err) {
+                expect(err).to.have.status(400);
+            });
+    });
+
+    it('should return error that usertype cannot empty', function() {
+        return chai.request(app)
+            .post('/auth/signup')
+            .send({
+                email:"sdjfhsdkjf@fjsdfjdksf.com",
+                password:"sfdsfdsfd",
+                userType:""
+            })
+            .then(function(res) {
+            })
+            .catch(function(err) {
+                expect(err).to.have.status(400);
+            });
+    });
+
 
     it('should return error that email should be unique', function() {
         return chai.request(app)

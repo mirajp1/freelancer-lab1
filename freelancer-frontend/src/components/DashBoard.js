@@ -4,6 +4,7 @@ import '../css/Home.css';
 import ProjectList from "./ProjectList";
 import {withRouter} from "react-router-dom";
 import {fetchEmployerProjects, fetchFreelancerProjects} from "../actions/actions";
+import ProjectDashboardList from "./ProjectDashboardList";
 
 class DashBoard extends Component {
 
@@ -64,8 +65,8 @@ class DashBoard extends Component {
                 </div>
 
 
-                {this.state.show == "freelancer" && <ProjectList projects={this.props.fprojects ? this.props.fprojects : []}/> }
-                {this.state.show == "employer" && <ProjectList projects={this.props.eprojects ? this.props.eprojects : []}/> }
+                {this.state.show == "freelancer" && <ProjectDashboardList projects={this.props.fprojects ? this.props.fprojects : []}/> }
+                {this.state.show == "employer" && <ProjectDashboardList projects={this.props.eprojects ? this.props.eprojects : []}/> }
 
 
 

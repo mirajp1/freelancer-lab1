@@ -81,7 +81,7 @@ class Project extends Component{
                                     Avg Bid (USD)
                                 </div>
                                 <div className="row number-text">
-                                    ${Bids && Bids.length>0?Bids[0].avg_bid:0 } / hr
+                                    ${Bids && Bids.length>0? +"10":0 } / hr
                                 </div>
                             </div>
                             <div className="col-md-2 column-center">

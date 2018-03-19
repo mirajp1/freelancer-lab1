@@ -7,7 +7,7 @@ export default function (state = INITIAL_STATE, action) {
         case "GET_PROFILE":
             return { ...state, profile:action.payload };
         case "UPDATE_PROFILE":
-            return { ...state,profile:{...state.profile,image:action.payload.image,name:action.payload.name,about:action.payload.about}};
+            return { ...state,profile:{...state.profile,image:action.payload.image,name:action.payload.name,about:action.payload.about,phone:action.payload.phone}};
         case "UPDATE_PROFILE_ERROR":
             return { ...state,error:action.payload.error};
 

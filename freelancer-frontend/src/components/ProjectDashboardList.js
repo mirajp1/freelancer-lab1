@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import '../css/ProjectList.css';
 import ProjectItem from "./ProjectItem";
+import ProjectDashboardItem from "./ProjectDashboardItem";
 
 class ProjectList extends Component {
     render() {
@@ -21,22 +22,22 @@ class ProjectList extends Component {
                         </div>
 
                         <div className="col-md-2 col-xs-2">
-                            <div className="pull-right">BIDS</div>
+                            <div className="pull-right">AVG BID</div>
 
                         </div>
 
                         <div className="col-md-2 col-xs-2">
-                            <div className="pull-right">DATE</div>
+                            <div className="pull-right">YOUR BID</div>
                         </div>
 
                         <div className="col-md-2 col-xs-2">
-                            <div className="pull-right">BUDGET</div>
+                            <div className="pull-right">STATUS</div>
                         </div>
 
                     </div>
 
                     {this.props.projects.map(function (item,key){
-                      return (<ProjectItem key={key} details={item}/>);
+                      return (<ProjectDashboardItem key={key} details={item}/>);
                     } )}
 
                 </div>

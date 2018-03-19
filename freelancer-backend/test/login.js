@@ -49,5 +49,33 @@ describe('API endpoint /auth/login', function() {
             });
     });
 
+    it('should return error that password cannot be empty', function() {
+        return chai.request(app)
+            .post('/auth/login')
+            .send({
+                email:"test@gmail.com",
+                password:""
+            })
+            .then(function(res) {
+            })
+            .catch(function(err) {
+                expect(err).to.have.status(400);
+            });
+    });
+
+    it('should return error that username cannot be empty', function() {
+        return chai.request(app)
+            .post('/auth/login')
+            .send({
+                email:"",
+                password:"fsdfsdfsdfsd"
+            })
+            .then(function(res) {
+            })
+            .catch(function(err) {
+                expect(err).to.have.status(400);
+            });
+    });
+
 
 });

@@ -25,6 +25,7 @@ module.exports = {
             });
     },
     update(req,res){
+        console.log("body");
         console.log(req.body);
 
         console.log(req.file);
@@ -49,7 +50,8 @@ module.exports = {
                         image:filePath==="" ? profile.image : filePath,
                         name:req.body.name,
                         about:req.body.about,
-                        email:req.body.email
+                        email:req.body.email,
+                        phone:req.body.phone,
                     })
                         .then((profile)=>{
                             res.status(201).send(profile)

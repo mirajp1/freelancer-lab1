@@ -17,6 +17,7 @@ class Profile extends Component {
             email:"",
             name:"",
             about:"",
+            phone:"",
 
         }
         this.onHandleInputChange = this.onHandleInputChange.bind(this);
@@ -77,6 +78,7 @@ class Profile extends Component {
             email:this.props.user ? this.props.user.email:"",
             about:this.props.profile ? this.props.profile.about:"",
             name:this.props.profile ? this.props.profile.name:"",
+            phone:this.props.profile ? this.props.profile.phone:"",
 
 
         });
@@ -93,6 +95,7 @@ class Profile extends Component {
         formData.append('email', this.state.email);
         formData.append('about', this.state.about);
         formData.append('name', this.state.name);
+        formData.append('phone', this.state.phone);
 
 
         this.props.updateProfile(localStorage.getItem("jwtToken"),formData);
@@ -134,10 +137,17 @@ class Profile extends Component {
                         <div className="row">
 
                             <div className="col-md-12">
-                                {!this.state.editMode && <h5>{this.props.user ? this.props.user.email : null}</h5>}
+                                {!this.state.editMode && <h5>{this.props.user ? this.props.user.email : ""}</h5>}
                                 {this.state.editMode && <div className="row">
                                     <div className="form-group">
                                         <input type="email" className="form-control input-lg"  onChange={this.onHandleInputChange} value={this.state.email} name="email" placeholder="Email"/>
+                                    </div>
+                                </div>}
+
+                                {!this.state.editMode && <h5>{this.props.profile ? this.props.profile.phone : ""}</h5>}
+                                {this.state.editMode && <div className="row">
+                                    <div className="form-group">
+                                        <input type="text" className="form-control input-lg"  onChange={this.onHandleInputChange} value={this.state.phone} name="phone" placeholder="Phone No."/>
                                     </div>
                                 </div>}
 
